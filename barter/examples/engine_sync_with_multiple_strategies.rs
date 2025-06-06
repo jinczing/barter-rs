@@ -330,12 +330,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     )
     .await?;
 
+    // actually use multi-strategy
+    let combined_strategy = MultiStrategy {
+        strategy_a: StrategyA,
+        strategy_b: StrategyB
+    };
+
     // Construct System Args
     let args = SystemArgs::new(
         &instruments,
         executions,
         LiveClock,
-        DefaultStrategy::default(),
+        combined_strategy, // DefaultStrategy::default(),
         DefaultRiskManager::default(),
         market_stream,
         DefaultGlobalData::default(),
